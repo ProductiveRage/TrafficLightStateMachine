@@ -9,10 +9,10 @@ namespace TrafficLightStateMachine.States.Specific
 	public class RedLightPausedBeforeWaitingForTraffic : TimeBasedTransitiveState
 	{
 		private const int TIME_AFTER_RESETTING_TO_RED_BEFORE_CONSIDERING_TRAFFIC = 5;
-
-		public RedLightPausedBeforeWaitingForTraffic() : base(TIME_AFTER_RESETTING_TO_RED_BEFORE_CONSIDERING_TRAFFIC, StateTransition.Pop()) { }
-
-		public override ColourOptions Colour { get { return ColourOptions.RedOnly; } }
-		public override StatusOptions Status { get { return StatusOptions.NotHandlingTraffic; } }
+		public RedLightPausedBeforeWaitingForTraffic() : base(
+			ColourOptions.RedOnly,
+			StatusOptions.NotHandlingTraffic,
+			TIME_AFTER_RESETTING_TO_RED_BEFORE_CONSIDERING_TRAFFIC,
+			StateTransition.Pop()) { }
 	}
 }
