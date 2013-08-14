@@ -12,5 +12,6 @@ namespace TrafficLightStateMachine.States.Specific
 		public RedAndYellowLight() : base(TIME_TO_WAIT_ON_RED_AND_YELLOW, StateTransition.Replace(new GreenLight())) { }
 
 		public override ColourOptions Colour { get { return ColourOptions.RedAndYellow; } }
+		public override StatusOptions Status { get { return StatusOptions.HandlingTraffic; } }
 	}
 }

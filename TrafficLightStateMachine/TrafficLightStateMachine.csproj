@@ -50,6 +50,9 @@
     <Compile Include="States\Specific\RedAndYellowLight.cs" />
     <Compile Include="States\Specific\GreenLight.cs" />
     <Compile Include="States\Specific\YellowLight.cs" />
+    <Compile Include="States\Specific\RedLightPausedBeforeWaitingForTraffic.cs" />
+    <Compile Include="States\StatusOptions.cs" />
+    <Compile Include="States\Specific\RedLightWaitingForAccess.cs" />
     <Compile Include="States\TimeBasedTransitiveState.cs" />
     <Compile Include="States\Specific\RedLightWaitingForTraffic.cs" />
     <Compile Include="States\IAmATrafficLightState.cs" />
