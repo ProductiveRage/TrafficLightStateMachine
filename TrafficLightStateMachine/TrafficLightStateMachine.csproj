@@ -45,7 +45,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\Specific\RedLightAboutToChangeLight.cs" />
+    <Compile Include="States\StateTransition.cs" />
+    <Compile Include="States\Specific\RedLightAboutToChange.cs" />
     <Compile Include="States\Specific\RedAndYellowLight.cs" />
     <Compile Include="States\Specific\GreenLight.cs" />
     <Compile Include="States\Specific\YellowLight.cs" />

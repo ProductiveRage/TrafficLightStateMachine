@@ -9,7 +9,7 @@ namespace TrafficLightStateMachine.States.Specific
 	{
 		public const int TIME_TO_STAY_ON_GREEN = 100;
 		
-		public GreenLight() : base(TIME_TO_STAY_ON_GREEN, new YellowLight()) { }
+		public GreenLight() : base(TIME_TO_STAY_ON_GREEN, StateTransition.Replace(new YellowLight())) { }
 
 		public override ColourOptions Colour { get { return ColourOptions.GreenOnly; } }
 	}

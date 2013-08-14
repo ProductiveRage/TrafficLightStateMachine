@@ -9,19 +9,19 @@ namespace TrafficLightStateMachine.States.Specific
 	{
 		public ColourOptions Colour { get { return ColourOptions.RedOnly; } }
 
-		public IAmATrafficLightState RegisterCarQueueing()
+		public StateTransition RegisterCarQueueing()
 		{
-			return new RedLightAboutToChangeLight();
+			return StateTransition.Push(new RedLightAboutToChange());
 		}
 
 		/// <summary>
 		/// This will represent the passing of an arbitrary slice of time. The "real time" duration of it is not important, its duration could be decreased or
 		/// increased to make the simulation proceed more quickly or more slowly.
 		/// </summary>
-		public IAmATrafficLightState RegisterPassageOfTime()
+		public StateTransition RegisterPassageOfTime()
 		{
 			// If all that's happening is that time is ticking along then there is nothing to action here
-			return this;
+			return StateTransition.NoChange();
 		}
 	}
 }
