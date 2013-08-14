@@ -7,18 +7,28 @@ namespace TrafficLightStateMachine
 	public class TrafficLight
 	{
 		private readonly Stack<IAmATrafficLightState> _states;
-		public TrafficLight(IAmATrafficLightState initialState)
+		public TrafficLight(string trafficLightId, IAmATrafficLightState initialState)
 		{
+			if (string.IsNullOrWhiteSpace(trafficLightId))
+				throw new ArgumentNullException("Null/blank trafficLightId specified");
 			if (initialState == null)
 				throw new ArgumentNullException("initialState");
 
+			TrafficLightId = trafficLightId.Trim();
 			_states = new Stack<IAmATrafficLightState>();
 			_states.Push(initialState);
 		}
 
+		public string TrafficLightId { get; private set; }
+
 		public ColourOptions Colour
 		{
 			get { return _states.Peek().Colour; }
+		}
+
+		public StatusOptions Status
+		{
+			get { return _states.Peek().Status; }
 		}
 
 		public void RegisterCarQueueing()
@@ -62,7 +72,7 @@ namespace TrafficLightStateMachine
 				throw new ArgumentException("Unsupported transition type: " + transition.TransitionType);
 			var newColour = _states.Peek().Colour;
 			if (newColour != previousColour)
-				Console.WriteLine("* Colour changed from " + previousColour + " to " + newColour);
+				Console.WriteLine("* " + TrafficLightId + " changed " + previousColour + " to " + newColour);
 		}
 	}
 }

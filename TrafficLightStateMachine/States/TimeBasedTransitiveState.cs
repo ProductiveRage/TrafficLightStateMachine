@@ -22,6 +22,7 @@ namespace TrafficLightStateMachine.States
 		}
 
 		public abstract ColourOptions Colour { get; }
+		public abstract StatusOptions Status { get; }
 
 		public StateTransition RegisterCarQueueing()
 		{
@@ -66,6 +67,7 @@ namespace TrafficLightStateMachine.States
 			public IAmATrafficLightState Source { get; private set; }
 
 			public override ColourOptions Colour { get { return Source.Colour; } }
+			public override StatusOptions Status { get { return Source.Status; } }
 		}
 	}
 }

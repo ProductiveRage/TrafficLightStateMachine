@@ -22,8 +22,18 @@ namespace TrafficLightStateMachine.States
 
 		public static StateTransition NoChange() { return new StateTransition(TransitionTypeOptions.NoChange, null); }
 		public static StateTransition Pop() { return new StateTransition(TransitionTypeOptions.Pop, null); }
-		public static StateTransition Push(IAmATrafficLightState state) { return new StateTransition(TransitionTypeOptions.Push, state); }
-		public static StateTransition Replace(IAmATrafficLightState state) { return new StateTransition(TransitionTypeOptions.Replace, state); }
+		public static StateTransition Push(IAmATrafficLightState state)
+		{
+			if (state == null)
+				throw new ArgumentNullException("state");
+			return new StateTransition(TransitionTypeOptions.Push, state);
+		}
+		public static StateTransition Replace(IAmATrafficLightState state)
+		{
+			if (state == null)
+				throw new ArgumentNullException("state");
+			return new StateTransition(TransitionTypeOptions.Replace, state);
+		}
 
 		public enum TransitionTypeOptions
 		{
@@ -34,7 +44,7 @@ namespace TrafficLightStateMachine.States
 		}
 
 		public TransitionTypeOptions TransitionType { get; private set; }
-		
+
 		/// <summary>
 		/// This will be null if TransitionType is NoChange or Pop and non-null if TransitionType is Push or Replace
 		/// </summary>

@@ -9,8 +9,9 @@ namespace TrafficLightStateMachine.States.Specific
 	{
 		private const int TIME_TO_WAIT_ON_YELLOW = 5;
 
-		public YellowLight() : base(TIME_TO_WAIT_ON_YELLOW, StateTransition.Pop()) { }
+		public YellowLight() : base(TIME_TO_WAIT_ON_YELLOW, StateTransition.Replace(new RedLightPausedBeforeWaitingForTraffic())) { }
 
 		public override ColourOptions Colour { get { return ColourOptions.YellowOnly; } }
+		public override StatusOptions Status { get { return StatusOptions.HandlingTraffic; } }
 	}
 }

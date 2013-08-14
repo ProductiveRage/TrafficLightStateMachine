@@ -3,12 +3,14 @@
 namespace TrafficLightStateMachine.States.Specific
 {
 	/// <summary>
-	/// No-one is queuing up, this is a red light with no intention of changing
+	/// This is a red light that wants to change state to let through queuing traffic but something is stopping it. It can determine when this dependency changes
+	/// by consulting the specific isAllowedToLetTrafficThrough filter. This could be a red light at a crossroads where traffic is currently flowing on the
+	/// perpendicular road, preventing traffic on this light's road from being allowed to leave.
 	/// </summary>
-	public class RedLightWaitingForTraffic : IAmATrafficLightState
+	public class RedLightWaitingForAccess : IAmATrafficLightState
 	{
 		private readonly Func<bool> _isAllowedToLetTrafficThrough;
-		public RedLightWaitingForTraffic(Func<bool> isAllowedToLetTrafficThrough)
+		public RedLightWaitingForAccess(Func<bool> isAllowedToLetTrafficThrough)
 		{
 			if (isAllowedToLetTrafficThrough == null)
 				throw new ArgumentNullException("isAllowedToLetTrafficThrough");
@@ -21,10 +23,8 @@ namespace TrafficLightStateMachine.States.Specific
 
 		public StateTransition RegisterCarQueueing()
 		{
-			if (_isAllowedToLetTrafficThrough())
-				return StateTransition.Push(new RedLightAboutToChange());
-
-			return StateTransition.Push(new RedLightWaitingForAccess(_isAllowedToLetTrafficThrough));
+			// We can't do anything here, we're already waiting
+			return StateTransition.NoChange();
 		}
 
 		/// <summary>
@@ -33,7 +33,9 @@ namespace TrafficLightStateMachine.States.Specific
 		/// </summary>
 		public StateTransition RegisterPassageOfTime()
 		{
-			// If all that's happening is that time is ticking along then there is nothing to action here
+			if (_isAllowedToLetTrafficThrough())
+				return StateTransition.Replace(new RedAndYellowLight());
+
 			return StateTransition.NoChange();
 		}
 	}
