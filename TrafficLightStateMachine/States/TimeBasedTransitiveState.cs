@@ -9,8 +9,8 @@ namespace TrafficLightStateMachine.States
 	public abstract class TimeBasedTransitiveState : IAmATrafficLightState
 	{
 		private readonly int _timeSlicesToWaitFor;
-		private readonly IAmATrafficLightState _nextState;
-		protected TimeBasedTransitiveState(int timeSlicesToWaitFor, IAmATrafficLightState nextState)
+		private readonly StateTransition _nextState;
+		protected TimeBasedTransitiveState(int timeSlicesToWaitFor, StateTransition nextState)
 		{
 			if (timeSlicesToWaitFor <= 0)
 				throw new ArgumentOutOfRangeException("timeSlicesToWaitFor");
@@ -23,21 +23,23 @@ namespace TrafficLightStateMachine.States
 
 		public abstract ColourOptions Colour { get; }
 
-		public IAmATrafficLightState RegisterCarQueueing()
+		public StateTransition RegisterCarQueueing()
 		{
-			return this;
+			return StateTransition.NoChange();
 		}
 
 		/// <summary>
 		/// This will represent the passing of an arbitrary slice of time. The "real time" duration of it is not important, its duration could be decreased or increased
 		/// to make the simulation proceed more quickly or more slowly.
 		/// </summary>
-		public IAmATrafficLightState RegisterPassageOfTime()
+		public StateTransition RegisterPassageOfTime()
 		{
 			if (_timeSlicesToWaitFor == 1)
 				return _nextState;
 
-			return new TimeBasedTransitiveStateInstance(this, _timeSlicesToWaitFor - 1, _nextState);
+			return StateTransition.Replace(
+				new TimeBasedTransitiveStateInstance(this, _timeSlicesToWaitFor - 1, _nextState)
+			);
 		}
 
 		/// <summary>
@@ -46,7 +48,7 @@ namespace TrafficLightStateMachine.States
 		/// </summary>
 		private class TimeBasedTransitiveStateInstance : TimeBasedTransitiveState
 		{
-			public TimeBasedTransitiveStateInstance(IAmATrafficLightState source, int timeSlicesToWaitFor, IAmATrafficLightState nextState)
+			public TimeBasedTransitiveStateInstance(IAmATrafficLightState source, int timeSlicesToWaitFor, StateTransition nextState)
 				: base(timeSlicesToWaitFor, nextState)
 			{
 				if (source == null)

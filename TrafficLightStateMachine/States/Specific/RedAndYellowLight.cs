@@ -9,7 +9,7 @@ namespace TrafficLightStateMachine.States.Specific
 	{
 		public const int TIME_TO_WAIT_ON_RED_AND_YELLOW = 5;
 
-		public RedAndYellowLight() : base(TIME_TO_WAIT_ON_RED_AND_YELLOW, new GreenLight()) { }
+		public RedAndYellowLight() : base(TIME_TO_WAIT_ON_RED_AND_YELLOW, StateTransition.Replace(new GreenLight())) { }
 
 		public override ColourOptions Colour { get { return ColourOptions.RedAndYellow; } }
 	}
